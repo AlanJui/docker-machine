@@ -11,4 +11,4 @@
 **Source Code 原始出處**
 https://bitbucket.org/markadams/pytexas-2015-demo
 
-專案使用之操作，請詳檔案： `Operation_Guide.md` （文件名稱：《專案操作指引》）。
+專案使用之操作，請詳檔案： **[Operation_Guide.md](./Operation_Guide.md)** （文件名稱：《專案操作指引》）。
