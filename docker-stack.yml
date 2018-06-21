@@ -1,0 +1,41 @@
+version: "3"
+services:
+  web:
+    image: alanjui/docker-swarm:0.0.1
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+    ports:
+    - "80:8000"
+    networks:
+      - mynet
+    environment:
+      - "DATABASE_HOST=db"
+      - "DATABASE_NAME=postgres"
+      - "DATABASE_USER=postgres"
+      - "DATABASE_PASSWORD=postgres"
+  visualizer:
+      image: dockersamples/visualizer:stable
+      ports:
+        - "8080:8080"
+      volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock"
+      deploy:
+        placement:
+          constraints: [node.role == manager]
+      networks:
+        - mynet
+  db:
+    image: postgres:9.4
+    ports:
+      - "5432:5432"
+    networks:
+      - mynet
+
+networks:
+  mynet:
