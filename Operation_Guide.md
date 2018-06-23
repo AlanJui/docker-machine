@@ -1,4 +1,4 @@
-
+# 專案操作指引
 
 Build Docker Image
 ==================
@@ -31,10 +31,11 @@ Start Docker-Machine
 
 ```
 docker-machine create --driver virtualbox myvm1
+docker-machine create --driver virtualbox myvm2
 ```
 
 ```
-docker-ls
+docker-machine ls
 ```
 
 ```
@@ -46,12 +47,21 @@ docker swarm join-token manager
 ```
 
 ```
-docker-machine ssh myvm2 docker swarm join --token <TOKEN>
+docker-machine ssh myvm2 docker swarm join --token <TOKEN> 192.168.99.100:2377
+```
+
+```
+docker-machine ssh myvm1 docker node ls
 ```
 
 
 
 ## Start up App in Swarm
+
+```
+docker-machine env myvm1
+eval $(docker-machine env myvm1)
+```
 
 ```
 docker stack deploy -c docker-stack.yml myapp-01
@@ -65,10 +75,15 @@ Executing the commands listed below on myvm1 (Swarm Manager Machine)
 
 Take App down from stack:
 ```
-	docker stack rm myapp-01
+docker stack rm myapp-01
 ```
 
 Take down the Swarm:
 ```
-	docker swarm leave --force
+docker swarm leave --force
+```
+
+
+```
+eval $(docker-machine env -u)
 ```
